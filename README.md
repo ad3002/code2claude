@@ -53,6 +53,49 @@ From source:
 
 4. Provide the consolidated code to an AI system for analysis and manipulation.
 
+## Current format of the consolidated code
+
+The current format of the consolidated code is as follows:
+
+```xml
+<file>
+   <path>/path/to/file1.py</path>
+   <content>
+      # Code content of file1.py
+      def function1():
+         # ...
+   </content>
+</file>
+
+<file>
+   <path>/path/to/file2.py</path>
+   <content>
+      # Code content of file2.py
+      class Class2:
+         # ...
+   </content>
+</file>
+
+...
+```
+
+## Possbile prompt for the AI system
+
+```xml
+<prompt>
+   <consolidated_code>
+      <instruction>Claude, please, see the attached file</instruction>
+   </consolidated_code>
+
+   <question>
+   Your question or request goes here. For example:
+   - Can you identify any potential performance issues in the code?
+   - How can I refactor the code to improve readability and maintainability?
+   - Are there any security vulnerabilities or best practices violations in the code?
+   </question>
+</prompt>
+```
+
 ## How to improve the code before running the consolidator
 
 Remember, the specific details and format of the consolidated code may vary based on your project's needs and the programming language being used. The key is to provide a clear, organized, and well-documented representation of your codebase that facilitates effective analysis and collaboration between humans and AI.

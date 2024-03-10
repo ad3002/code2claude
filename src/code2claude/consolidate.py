@@ -27,14 +27,15 @@ def consolidate_code(code_files):
     consolidated_code = ""
     for file_path in code_files:
         code = extract_code(file_path)
-        consolidated_code += f"# File: {file_path}\n{code}\n\n"
+        instruction = f"<file>\n<path>{file_path}</path>\n<content>\n{code}\n</content>\n</file>\n\n"
+        consolidated_code += instruction
     return consolidated_code
 
 def main():
     parser = argparse.ArgumentParser(description="Code Consolidator")
-    parser.add_argument("-r", "--repo_path", help="Path to the code repository")
-    parser.add_argument("-o", "--output_file", default="consolidated_code.py", help="Output file (default: consolidated_code.py)")
-    parser.add_argument("--extensions", nargs="+", default=[".py"], help="File extensions to include (default: .py)")
+    parser.add_argument("-r", "--repo_path", help="Path to the code repository", required=True)
+    parser.add_argument("-o", "--output_file", default="consolidated_code.code", help="Output file (default: consolidated_code.code)")
+    parser.add_argument("-e", "--extensions", nargs="+", default=[".py"], help="File extensions to include (default: .py)")
     args = parser.parse_args()
 
     repo_path = args.repo_path
