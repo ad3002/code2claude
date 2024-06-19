@@ -35,7 +35,7 @@ def consolidate_code_raw(code_files):
     consolidated_code = ""
     for file_path in code_files:
         code = extract_code(file_path)
-        instruction = f"### {file_path}\n{code}\n ### end of file {file_path}\n\n"
+        instruction = f"###### {file_path} ###\n{code}\n###### end of file {file_path} ###\n\n"
         consolidated_code += instruction
     return consolidated_code
 

@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-version = "0.2.2"
+version = "0.2.3"
 
 setup(
     name="code2claude",
