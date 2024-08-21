@@ -87,8 +87,14 @@ def main():
         consolidated_code = consolidate_code_raw(code_files)
 
     print(f"Consolidated {len(code_files)} files:")
+    total_nol = 0
     for file_name in code_files:
-        print(f"\t{file_name}: {get_NoL(file_name)} lines")
+        nol = get_NoL(file_name)
+        total_nol += nol
+        print(f"\t{file_name}: {nol} lines")
+
+    print(f"Total lines: {total_nol}")
+    print(f"Total chars: {len(consolidated_code)}")
     
     with open(output_file, "w") as file:
         file.write(consolidated_code)

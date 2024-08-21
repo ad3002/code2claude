@@ -3,5 +3,5 @@ rm -rf build
 python3.11 setup.py sdist bdist_wheel
 twine upload dist/* 
 pip3.11 uninstall -y code2claude
-sleep 10
+sleep 30
 pip3.11 install code2claude

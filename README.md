@@ -104,6 +104,35 @@ python code2claude.py -r /path/to/repo -o consolidated_code.xml -f xml --skiptes
 </prompt>
 ```
 
+## Statistics
+
+During code consolidation, the tool also gathers and displays statistics about the consolidated files. This includes:
+
+- **Number of Files**: The total number of files that were consolidated.
+- **Number of Lines**: The number of lines in each file and the total number of lines across all files.
+- **Number of Characters**: The total number of characters in the consolidated code.
+
+### Example of Statistics Output
+
+After running the command, the following information will be displayed:
+
+```plaintext
+Consolidated 10 files:
+    /path/to/file1.py: 120 lines
+    /path/to/file2.py: 98 lines
+    ...
+    /path/to/file10.py: 150 lines
+Total lines: 1000
+Total chars: 25000
+```
+
+- **Consolidated X files**: Indicates how many files were consolidated.
+- **[File path]: Y lines**: Shows the file path and the number of lines in that file.
+- **Total lines**: The total number of lines across all files.
+- **Total chars**: The total number of characters in the consolidated code.
+
+This statistics section provides insights into the size and structure of your project, which can be helpful for further code analysis and optimization.
+
 ## How to improve the code before running the consolidator
 
 Remember, the specific details and format of the consolidated code may vary based on your project's needs and the programming language being used. The key is to provide a clear, organized, and well-documented representation of your codebase that facilitates effective analysis and collaboration between humans and AI.
