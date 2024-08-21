@@ -46,6 +46,11 @@ def consolidate_code_raw(code_files):
         consolidated_code += instruction
     return consolidated_code
 
+def get_NoL(file_path):
+    with open(file_path, "r") as file:
+        code = file.readlines()
+    return len(code)
+
 def main():
     parser = argparse.ArgumentParser(description="Code Consolidator")
     parser.add_argument("-r", "--repo_path", help="Path to the code repository", required=True)
@@ -75,11 +80,15 @@ def main():
     if not format in ["xml", "raw"]:
         raise ValueError("Invalid format. Choose from xml, raw")
 
-    code_files = traverse_repository(repo_path, extensions, skip_tests, skip_folders, contain=contain)
+    code_files = traverse_repository(repo_path, extensions, skip_folders, skip_tests, contain=contain)
     if format == "xml":
         consolidated_code = consolidate_code_xml(code_files)
     elif format == "raw":
         consolidated_code = consolidate_code_raw(code_files)
+
+    print(f"Consolidated {len(code_files)} files:")
+    for file_name in code_files:
+        print(f"\t{file_name}: {get_NoL(file_name)} lines")
     
     with open(output_file, "w") as file:
         file.write(consolidated_code)
