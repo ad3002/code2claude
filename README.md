@@ -1,17 +1,21 @@
+Here’s the updated README file to match the provided code and setup configuration:
+
+---
+
 # code2claude: Code Consolidator
 
 A Python tool that consolidates code from a repository into a unified format for AI-assisted analysis and manipulation.
 
-Code Consolidator is a Python tool that traverses a code repository, extracts code from various files, and consolidates it into a unified format. The consolidated code is optimized for AI-assisted analysis and manipulation, enabling seamless collaboration between humans and AI in understanding and working with the codebase.
+Code Consolidator is a Python tool that traverses a code repository, extracts code from specified files, and consolidates it into a unified format. The consolidated code is optimized for AI-assisted analysis and manipulation, enabling seamless collaboration between humans and AI in understanding and working with the codebase.
 
 ## Features
 
-- Traverses a code repository and identifies relevant code files based on specified file extensions.
-- Extracts code from each file and applies necessary preprocessing steps.
-- Consolidates the extracted code into a single, unified format.
-- Includes metadata such as file paths and module names for context.
-- Provides options for code organization, dependency management, and documentation.
-- Facilitates AI-assisted code analysis, manipulation, and collaboration.
+- **Traverse a repository**: Identifies relevant code files based on specified file extensions.
+- **Code extraction**: Extracts code from each file without any preprocessing.
+- **Code consolidation**: Consolidates the extracted code into a single, unified format (XML or raw).
+- **Metadata inclusion**: Includes file paths for context.
+- **Skip options**: Optionally skips test files and specified folders.
+- **Selective inclusion**: Filters files containing a specified string in the file path.
 
 ## Installation
 
@@ -25,7 +29,7 @@ From source:
 
 1. Clone the repository:
 
-   ```
+   ```bash
    git clone https://github.com/ad3002/code2claude
    ```
 
@@ -41,42 +45,46 @@ From source:
 
 ## Usage
 
-1. Update the `config.py` file with the necessary configurations, such as the repository path and file extensions to consider.
+```bash
+python code2claude.py -r /path/to/repo -o output.xml -f xml --skiptests --skipfolders folder1,folder2 --contain keyword -e .py .js
+```
 
-2. Run the code consolidator:
-   
-   ```bash
-   python code2claude.py /path/to/repo --extensions .py .js .java
-   ```
+- `-r/--repo_path`: Path to the code repository (required).
+- `-o/--output_file`: Path to the output file (default: `consolidated_code.code`).
+- `-f/--format`: Output format, either `xml` or `raw` (default: `xml`).
+- `--skiptests`: Skip test files that contain "test" in their name (default: `False`).
+- `-s/--skipfolders`: Comma-separated list of folders to skip (default: `False`).
+- `--contain`: Include files containing this string in the file path.
+- `-e/--extensions`: Space-separated list of file extensions to include (default: `.py`).
 
-3. The consolidated code will be generated and saved in the specified output format.
+### Example Command
 
-4. Provide the consolidated code to an AI system for analysis and manipulation.
+```bash
+python code2claude.py -r /path/to/repo -o consolidated_code.xml -f xml --skiptests True -s folder_to_skip --contain utils -e .py .java
+```
 
-## Current format of the consolidated code
+### Output Formats
 
-The current format of the consolidated code is as follows:
+**XML Format:**
 
 ```xml
 <file>
-   <path>/path/to/file1.py</path>
+   <path>/path/to/file.py</path>
    <content>
-      # Code content of file1.py
-      def function1():
-         # ...
-   </content>
-</file>
-
-<file>
-   <path>/path/to/file2.py</path>
-   <content>
-      # Code content of file2.py
-      class Class2:
-         # ...
+      # Python code here
    </content>
 </file>
 
 ...
+```
+
+
+**Raw Format:**
+
+```plaintext
+###### /path/to/file.py ###
+# Python code here
+###### end of file /path/to/file.py ###
 ```
 
 ## Possbile prompt for the AI system

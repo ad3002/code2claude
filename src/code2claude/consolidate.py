@@ -10,16 +10,18 @@ import os
 import argparse
 from unittest import skip
 
-def traverse_repository(repo_path, extensions, skip_tests=False, contain=""):
+def traverse_repository(repo_path, extensions, skip_folders, skip_tests=False, contain=""):
     code_files = []
     for root, dirs, files in os.walk(repo_path):
         for file in files:
+            file_path = os.path.join(root, file)
+            if any(folder in file_path for folder in skip_folders):
+                continue
             if skip_tests and "test" in file:
                 continue
-            if contain and contain not in file:
+            if contain and contain not in file_path:
                 continue
             if any(file.endswith(ext) for ext in extensions):
-                file_path = os.path.join(root, file)
                 code_files.append(file_path)
     return code_files
 
@@ -50,6 +52,7 @@ def main():
     parser.add_argument("-o", "--output_file", default="consolidated_code.code", help="Output file (default: consolidated_code.code)")
     parser.add_argument("-f", "--format", default="xml", help="Output format xml, raw (default: xml)")
     parser.add_argument("--skiptests", default=False, help="Skip test files, files with test in file_path (default: False)")
+    parser.add_argument("-s", "--skipfolders", default=False, help="Skip folders separated by comma (default: False)")
     parser.add_argument("--contain", default="", help="Include files containing this string in file path")
     parser.add_argument("-e", "--extensions", nargs="+", default=[".py"], help="File extensions or file names to include (default: .py)")
     
@@ -62,11 +65,17 @@ def main():
     format = args.format
     skip_tests = bool(args.skiptests)
     contain = args.contain
+    skip_folders = args.skipfolders
+
+    if skip_folders:
+        skip_folders = skip_folders.split(",")
+    else:
+        skip_folders = []
 
     if not format in ["xml", "raw"]:
         raise ValueError("Invalid format. Choose from xml, raw")
 
-    code_files = traverse_repository(repo_path, extensions, skip_tests, contain=contain)
+    code_files = traverse_repository(repo_path, extensions, skip_tests, skip_folders, contain=contain)
     if format == "xml":
         consolidated_code = consolidate_code_xml(code_files)
     elif format == "raw":
